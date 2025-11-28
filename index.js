@@ -1,24 +1,27 @@
-// console.log("Hello World")
 const express = require("express")
 
+const mongoose = require("mongoose")
 const app = express()
 
-const port = 3000;
+require("dotenv").config()
 
-app.get("/",(req,res)=>{
-    res.send("Hello World for Backend Changed")
+const port = 3000
+
+app.get("/Home",(req,res)=>{
+    res.send("App Listing on Home Page")
 })
 
-app.get("/about",(req,res)=>{
-    res.send("About Page")
-})
-
-
-/// 
-app.get("/home",(req,res)=>{
-    res.send("Home Page")
+app.get("/projects",(req,res)=>{
+    res.send("App Listing on Projects Page")
 })
 
 app.listen(port,()=>{
-    console.log(`Server is running on: ${port}`)
+    console.log("App listing on Port 3000")
 })
+
+
+const connnectionString = process.env.CONNECTION_STRING
+
+mongoose.connect(connnectionString)
+.then(()=>console.log("Database Connnected"))
+.catch((error)=>console.log(error))

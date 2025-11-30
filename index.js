@@ -20,8 +20,13 @@ app.listen(port,()=>{
 })
 
 
-const connnectionString = process.env.CONNECTION_STRING
+// const connnectionString = process.env.CONNECTION_STRING
+const databaseURl = process.env.CONNECTION_STRING
 
-mongoose.connect(connnectionString)
-.then(()=>console.log("Database Connnected"))
+// mongoose.connect(connnectionString)
+// .then(()=>console.log("Database Connnected"))
+// .catch((error)=>console.log(error))
+
+mongoose.connect(databaseURl)
+.then(()=>console.log("DataBase Connected Successfully"))
 .catch((error)=>console.log(error))

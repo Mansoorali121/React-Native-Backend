@@ -44,10 +44,14 @@ app.listen(3000,()=>{
 })
 
 
-app.get("/home", (req, res)=>{
+app.get("/home", (req,res)=>{
     res.send("App is listing on home Page")
 })
 
-app.get("/likes", (req, res)=>{
+app.get("/likes",(req,res)=>{
     res.send("App is Running on Likes Page")
+})
+
+app.get("/projects",(req,res)=>{
+    res.send("Projects page is listing ")
 })

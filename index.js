@@ -14,7 +14,17 @@ const port = 3000
 app.use(express.json())
 //// Books Schema
 
-const booKSchema =  new mongoose.Schema({})
+const booKSchema =  new mongoose.Schema({
+    bookName:{
+        type:String,
+        required:true
+    },
+    Counter:{
+        type:Number,
+        required:true
+
+    }
+})
 
 const BookModel = mongoose.model("Book", booKSchema)
 
@@ -26,6 +36,12 @@ app.post("/books",async(req,res)=>{
     res.status(201).json(newbook)
 })
 
+/// Book Fetch Route
+
+app.get("/books",async(req,res)=>{
+    const booklist = await BookModel.find()
+    res.status(200).send(booklist)
+})
 
 
 const databaseconnection = process.env.CONNECTION_STRING

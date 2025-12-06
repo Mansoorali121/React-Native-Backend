@@ -47,17 +47,30 @@ app.get("/books", async (req, res) => {
   }
 });
 
-
-// Fetch By Id 
-app.get("/books/:id", async(req,res)=>{
+// Fetch By Id
+app.get("/books/:id", async (req, res) => {
   try {
-    const {id} = req.params
-    const book = await BookModel.findById(id)
-    res.status(200).json(book)
+    const { id } = req.params;
+    const book = await BookModel.findById(id);
+    res.status(200).json(book);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-})
+});
+
+// Delete By Id
+app.delete("/books/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedbook = await BookModel.findByIdAndDelete(id);
+    if(!deletedbook){
+      return res.status(404).json({message:"Book Not Found"})
+    }
+    res.status(200).json({ message: "Book Deleted Successfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 const databaseconnection = process.env.CONNECTION_STRING;
 
 mongoose

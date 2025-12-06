@@ -47,6 +47,17 @@ app.get("/books", async (req, res) => {
   }
 });
 
+
+// Fetch By Id 
+app.get("/books/:id", async(req,res)=>{
+  try {
+    const {id} = req.params
+    const book = await BookModel.findById(id)
+    res.status(200).json(book)
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+})
 const databaseconnection = process.env.CONNECTION_STRING;
 
 mongoose

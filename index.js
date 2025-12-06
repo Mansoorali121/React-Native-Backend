@@ -1,56 +1,59 @@
+console.log("hello This is WOrking ");
 
-console.log("hello This is WOrking ")
+const express = require("express");
 
-const express = require("express")
+require("dotenv").config();
 
-require("dotenv").config()
+const mongoose = require("mongoose");
+const app = express();
 
-const mongoose = require("mongoose")
-const app = express()
+const port = 3000;
 
-
-const port = 3000
-
-app.use(express.json())
+app.use(express.json());
 //// Books Schema
 
-const booKSchema =  new mongoose.Schema({
-    bookName:{
-        type:String,
-        required:true
-    },
-    Counter:{
-        type:Number,
-        required:true
+const booKSchema = new mongoose.Schema({
+  bookName: {
+    type: String,
+    required: true,
+  },
+  Counter: {
+    type: Number,
+    required: true,
+  },
+});
 
-    }
-})
-
-const BookModel = mongoose.model("Book", booKSchema)
-
+const BookModel = mongoose.model("Book", booKSchema);
 
 // Book Create Route
 
-app.post("/books",async(req,res)=>{
-    const newbook = await BookModel.create(req.body)
-    res.status(201).json(newbook)
-})
+app.post("/books", async (req, res) => {
+  try {
+    const newbook = await BookModel.create(req.body);
+    res.status(201).json(newbook);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
 /// Book Fetch Route
 
-app.get("/books",async(req,res)=>{
-    const booklist = await BookModel.find()
-    res.status(200).send(booklist)
-})
+app.get("/books", async (req, res) => {
+  try {
+    const booklist = await BookModel.find();
+    res.status(200).send(booklist);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
+const databaseconnection = process.env.CONNECTION_STRING;
 
-const databaseconnection = process.env.CONNECTION_STRING
+mongoose
+  .connect(databaseconnection)
+  .then(() => console.log("Database Connected Successfully"))
+  .catch((error) => console.log(error));
 
-
-mongoose.connect(databaseconnection)
-.then(()=>console.log("Database Connected Successfully"))
-.catch((error)=>console.log(error))
-
-app.listen(port,()=>{
-    console.log("App is listing on Port 3000")
-})
+app.listen(port, () => {
+  console.log("App is listing on Port 3000");
+});

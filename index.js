@@ -52,6 +52,9 @@ app.get("/books/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const book = await BookModel.findById(id);
+     if(!book){
+      return res.status(404).json({message:"Book Not Found"})
+    }
     res.status(200).json(book);
   } catch (error) {
     res.status(400).json({ message: error.message });

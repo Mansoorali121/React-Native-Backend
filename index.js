@@ -27,24 +27,15 @@ const BookModel = mongoose.model("Book", booKSchema);
 
 // Book Create Route
 
-// app.post("/books", async (req, res) => {
-//   try {
-//     const newbook = await BookModel.create(req.body);
-//     res.status(201).json(newbook);
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// });
-app.post("/books",async(req,res)=>{
+app.post("/books", async (req, res) => {
   try {
     const newbook = await BookModel.create(req.body);
     res.status(201).json(newbook);
-    
   } catch (error) {
-    res.status(400).json({message:error.message});
-    
+    res.status(400).json({ message: error.message });
   }
-})
+});
+
 
 /// Book Fetch Route
 

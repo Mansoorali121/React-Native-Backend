@@ -39,14 +39,14 @@ app.post("/books", async (req, res) => {
 
 /// Book Fetch Route
 
-app.get("/books", async (req, res) => {
-  try {
-    const booklist = await BookModel.find();
-    res.status(200).send(booklist);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
+// app.get("/books", async (req, res) => {
+//   try {
+//     const booklist = await BookModel.find();
+//     res.status(200).send(booklist);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// });
 
 // Fetch By Id
 app.get("/books/:id", async (req, res) => {

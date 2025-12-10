@@ -52,14 +52,26 @@ app.listen(port,()=>{
 // Adding Data
 
 app.post("/StdData",async(req,res)=>{
-   const newStudent = await  StudentsModel.create(req.body)
-   res.status(200).json(newStudent)
+     try {
+        const newStudent = await  StudentsModel.create(req.body)
+        res.status(200).json(newStudent)
+   
+      
+     } catch (error) {
+      res.status(400).json({message:error.message})
+      
+     }
 })
 
 // Get Data
 app.get("/StdData",async(req,res)=>{
-  const StudentsList = await StudentsModel.find()
-  res.status(200).send(StudentsList);
+  try {
+    const StudentsList = await StudentsModel.find()
+     res.status(200).send(StudentsList);
+  } catch (error) {
+    res.status(400).json({message:error.message});
+    
+  }
 })
 
 const databaseconnection = process.env.CONNECTION_STRING

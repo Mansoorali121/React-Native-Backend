@@ -56,6 +56,12 @@ app.post("/StdData",async(req,res)=>{
    res.status(200).json(newStudent)
 })
 
+// Get Data
+app.get("/StdData",async(req,res)=>{
+  const StudentsList = await StudentsModel.find()
+  res.status(200).send(StudentsList);
+})
+
 const databaseconnection = process.env.CONNECTION_STRING
 
 mongoose.connect(databaseconnection)

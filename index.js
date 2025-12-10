@@ -69,6 +69,20 @@ app.get("/StdData/:id", async (req, res) => {
   }
 });
 
+
+// Delete By id 
+app.delete("/StdData/:id", async(req,res)=>{
+  try {
+    const {id} = req.params
+    const deleteBook = await StudentsModel.findByIdAndDelete(id)
+
+    res.status(200).json({message:"Book Deleted Successfully: "})
+    
+  } catch (error) {
+    res.status(400).json({message:error.message})
+    
+  }
+})
 const databaseconnection = process.env.CONNECTION_STRING;
 
 mongoose

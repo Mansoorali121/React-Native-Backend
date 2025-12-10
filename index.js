@@ -25,7 +25,16 @@ app.use(express.json())
 
 
 
-const StudentsNames = mongoose.Schema({})
+const StudentsNames = mongoose.Schema({
+  StudentName:{
+    type:String,
+    required:true
+  },
+  Age:{
+    type:Number,
+    required:true
+  }
+})
 
 StudentsModel = mongoose.model("StdNames",StudentsNames)
 

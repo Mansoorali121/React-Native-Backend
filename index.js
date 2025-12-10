@@ -1,87 +1,50 @@
-console.log("hello This is WOrking ");
+// console.log("hello This is WOrking ");
 
-const express = require("express");
+// const express = require("express");
 
-require("dotenv").config();
+// require("dotenv").config();
 
-const mongoose = require("mongoose");
-const app = express();
+// const mongoose = require("mongoose");
+// const app = express();
 
-const port = 3000;
+// const port = 3000;
 
-app.use(express.json());
-//// Books Schema
-
-const booKSchema = new mongoose.Schema({
-  bookName: {
-    type: String,
-    required: true,
-  },
-  Counter: {
-    type: Number,
-    required: true,
-  },
-});
-
-const BookModel = mongoose.model("Book", booKSchema);
-
-// Book Create Route
-
-app.post("/books", async (req, res) => {
-  try {
-    const newbook = await BookModel.create(req.body);
-    res.status(201).json(newbook);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
+// // app.use(express.json());
+// // //// Books Schema
 
 
-/// Book Fetch Route
 
-app.get("/books", async (req, res) => {
-  try {
-    const booklist = await BookModel.find();
-    res.status(200).send(booklist);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
+// const databaseconnection = process.env.CONNECTION_STRING;
 
-// Fetch By Id
-app.get("/books/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const book = await BookModel.findById(id);
-     if(!book){
-      return res.status(404).json({message:"Book Was Not Found"})
-    }
-    res.status(200).json(book);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
+// mongoose
+//   .connect(databaseconnection)
+//   .then(() => console.log("Mongo Db Database Connected Successfully: "))
+//   .catch((error) => console.log(error));
 
-// Delete By Id
-app.delete("/books/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedbook = await BookModel.findByIdAndDelete(id);
-    if(!deletedbook){
-      return res.status(404).json({message:"Book was Not Found"})
-    }
-    res.status(200).json({ message: "Book was Deleted Successfully" });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-const databaseconnection = process.env.CONNECTION_STRING;
+// app.listen(port, () => {
+//   console.log(`App is Listing on Provided Port ${port}`);
+// });
 
-mongoose
-  .connect(databaseconnection)
-  .then(() => console.log("Mongo Db Database Connected Successfully: "))
-  .catch((error) => console.log(error));
 
-app.listen(port, () => {
-  console.log(`App is Listing on Provided Port ${port}`);
-});
+const express = require("express")
+
+const app = express()
+
+require("dotenv").config()
+
+const mongoose = require("mongoose")
+
+const port = 3000
+
+
+app.listen(port,()=>{
+  console.log("App is Listing on Port 3000")
+})
+
+
+app.use("/home",(req,res)=>{
+  res.send("Home Page is Listing")
+})
+
+
+const databaseconnection = process.env.CONNECTION_STRING

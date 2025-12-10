@@ -74,9 +74,12 @@ app.get("/StdData/:id", async (req, res) => {
 app.delete("/StdData/:id", async(req,res)=>{
   try {
     const {id} = req.params
-    const deleteBook = await StudentsModel.findByIdAndDelete(id)
+    const deleteStudent = await StudentsModel.findByIdAndDelete(id)
 
     res.status(200).json({message:"Book Deleted Successfully: "})
+    if(!deleteStudent){
+      return res.status(400).json({message:"Book Not Found "})
+    }
     
   } catch (error) {
     res.status(400).json({message:error.message})

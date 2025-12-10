@@ -48,3 +48,8 @@ app.use("/home",(req,res)=>{
 
 
 const databaseconnection = process.env.CONNECTION_STRING
+
+mongoose.connect(databaseconnection)
+.then(()=>console.log("MongoDB Database Connected Successfully:  "))
+.catch((error)=>
+console.log(error))

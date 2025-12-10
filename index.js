@@ -19,7 +19,7 @@ const mongoose = require("mongoose")
 const port = 3000
 
 // JSON Body Parser 
-app.use(express.json)
+app.use(express.json())
 
 // Creatinng Database
 
@@ -35,9 +35,6 @@ app.listen(port,()=>{
 })
 
 
-// app.use("/home",(req,res)=>{
-//   res.send("Home Page is Listing")
-// })
 
 // Adding Data
 

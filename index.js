@@ -62,30 +62,43 @@ app.get("/StdData", async (req, res) => {
 app.get("/StdData/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const studentgetbyid =  await StudentsModel.findById(id)
-    res.status(200).json(studentgetbyid)
+    const studentgetbyid = await StudentsModel.findById(id);
+    if (!studentgetbyid) {
+      res.status(400).json({ message: "Student not Found" });
+    }
+    res.status(200).json(studentgetbyid);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-
-// Delete By id 
-app.delete("/StdData/:id", async(req,res)=>{
+// Delete By id
+app.delete("/StdData/:id", async (req, res) => {
   try {
-    const {id} = req.params
-    const deleteStudent = await StudentsModel.findByIdAndDelete(id)
-
-    res.status(200).json({message:"Book Deleted Successfully: "})
-    if(!deleteStudent){
-      return res.status(400).json({message:"Book Not Found "})
+    const { id } = req.params;
+    const deleteStudent = await StudentsModel.findByIdAndDelete(id);
+    if (!deleteStudent) {
+      return res.status(400).json({ message: "Student Not Found " });
     }
-    
+    res.status(200).json({ message: "Student Deleted Successfully: " });
   } catch (error) {
-    res.status(400).json({message:error.message})
-    
+    res.status(400).json({ message: error.message });
   }
-})
+});
+
+/// Update Students Data
+app.put("/StdData/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedStudent = await StudentsModel.findByIdAndUpdate(id, req.body,{new:true});
+    if (!updatedStudent) {
+      return res.status(400).json({ message: "Student Not Found " });
+    }
+    res.status(200).json({ message: "Student Updated Successfully: " , updatedStudent});
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 const databaseconnection = process.env.CONNECTION_STRING;
 
 mongoose

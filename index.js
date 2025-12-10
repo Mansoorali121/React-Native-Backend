@@ -33,6 +33,10 @@ const StudentsNames = mongoose.Schema({
   Age:{
     type:Number,
     required:true
+  },
+  Class:{
+    type:Number,
+    required:true
   }
 })
 

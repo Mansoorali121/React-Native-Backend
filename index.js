@@ -39,6 +39,12 @@ app.listen(port,()=>{
 //   res.send("Home Page is Listing")
 // })
 
+// Adding Data
+
+app.post("/StdData",async(req,res)=>{
+   const newStudent = await  StudentsModel.create(req.body)
+   res.status(200).json(newStudent)
+})
 
 const databaseconnection = process.env.CONNECTION_STRING
 

@@ -28,6 +28,17 @@ const StudentsNames = mongoose.Schema({
     type:Date,
     default:Date.now
     
+  },
+  Image:{
+    type:String,
+    default:"",
+    validate:{
+      validator:function(v){
+        if(!v)return true;
+        return /^https?:\/\/.+/.test(v)
+      },
+      message:"Image Must be a Valid URL: "
+    }
   }
 });
 

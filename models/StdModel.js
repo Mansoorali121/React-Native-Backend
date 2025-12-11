@@ -16,7 +16,7 @@ const StudentsNames = mongoose.Schema({
     max:[30,"Maximum age should be 30 "]
   },
   Class: {
-    type: Number,
+    type: [Number, "Class Can not be Empty"],
     required: true,
   },
   Grade:{

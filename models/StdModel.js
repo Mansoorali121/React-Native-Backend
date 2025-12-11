@@ -16,6 +16,16 @@ const StudentsNames = mongoose.Schema({
     type: Number,
     required: true,
   },
+  Grade:{
+    type:String,
+    required:true
+  }
 });
 
+StudentsNames.virtual("id").get(function () {
+    return this._id.toHexString()
+})
+StudentsNames.set("toJSON",{
+    virtuals:true,
+})
 module.exports = mongoose.model("StdNames", StudentsNames);

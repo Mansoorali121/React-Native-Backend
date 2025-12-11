@@ -1,50 +1,17 @@
-// // app.use(express.json());
-// // //// Books Schema
-
 const express = require("express");
-
-const app = express();
-
+const mongoose = require("mongoose");
 require("dotenv").config();
 
-const mongoose = require("mongoose");
+const studentRoute = require("./routes/Std.routes");
 
-const port = 3000;
-
-// JSON Body Parser
+const app = express();
 app.use(express.json());
-/// Exporting Route Now 
-const studentRoute = require("./routes/Std.routes")
+app.use("/StdData", studentRoute);
 
-app.use("/StdData",studentRoute)
+mongoose.connect(process.env.CONNECTION_STRING)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
 
-// Creatinng Database
-
-const StudentsNames = mongoose.Schema({
-  StudentName: {
-    type: String,
-    required: true,
-  },
-  Age: {
-    type: Number,
-    required: true,
-  },
-  Class: {
-    type: Number,
-    required: true,
-  },
+app.listen(3000,()=>{
+  console.log("App is listing on Port 3000")
 });
-
-StudentsModel = mongoose.model("StdNames", StudentsNames);
-
-app.listen(port, () => {
-  console.log("App is Listing on Port 3000");
-});
- 
-
-const databaseconnection = process.env.CONNECTION_STRING;
-
-mongoose
-  .connect(databaseconnection)
-  .then(() => console.log("MongoDB Database Connected Successfully:  "))
-  .catch((error) => console.log(error));

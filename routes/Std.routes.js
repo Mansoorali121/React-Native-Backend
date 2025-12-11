@@ -1,9 +1,14 @@
 
 const express = require("express")
-const mongoose = require("mongoose")
+
+
 
 // Creating Router with Express
 const router = express.Router()
+
+// Importing Student Model
+const StudentsModel = require("../models/StdModel");
+
 
 // Adding Data
 
@@ -68,4 +73,4 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-module.exports = router
+module.exports = router;

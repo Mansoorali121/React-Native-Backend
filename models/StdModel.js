@@ -6,11 +6,14 @@ const mongoose = require("mongoose");
 const StudentsNames = mongoose.Schema({
   StudentName: {
     type: String,
-    required: true,
+    required: [true, "Name Can not be Longer than 40 Characters"],
+
   },
   Age: {
     type: Number,
     required: true,
+    min:[18, "Age Can not be Less then 18"],
+    max:[30,"Maximum age should be 30 "]
   },
   Class: {
     type: Number,
@@ -19,6 +22,12 @@ const StudentsNames = mongoose.Schema({
   Grade:{
     type:String,
     required:true
+
+  },
+  dateCreated:{
+    type:Date,
+    default:Date.now
+    
   }
 });
 

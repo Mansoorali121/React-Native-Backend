@@ -27,7 +27,7 @@ router.post(
 
     body("Class")
       .notEmpty()
-      .withMessage("Class Should not be empty")
+      .withMessage("Class can not be Empty ")
       // .isLength({ min: 5, max: 12 })
       .withMessage("Class should be between to 12 "),
     body("Image").notEmpty().isURL().withMessage("Image Must be a valid URL"),

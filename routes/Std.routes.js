@@ -85,21 +85,35 @@ router.delete("/:id", async (req, res) => {
 });
 
 /// Update Students Data
-router.put("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updatedStudent = await StudentsModel.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-    if (!updatedStudent) {
-      return res.status(400).json({ message: "Student Not Found " });
+router.put(
+  "/:id",
+  [
+    body("StudentName")
+      .notEmpty()
+      .withMessage("Student Name is Optional While updation")
+      .isLength({ min: 5, max: 12 })
+      .withMessage("Class should be between to 12 "),],
+ 
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updatedStudent = await StudentsModel.findByIdAndUpdate(
+        id,
+        req.body,
+        {
+          new: true,
+        }
+      );
+      if (!updatedStudent) {
+        return res.status(400).json({ message: "Student Not Found " });
+      }
+      res
+        .status(200)
+        .json({ message: "Student Updated Successfully: ", updatedStudent });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
     }
-    res
-      .status(200)
-      .json({ message: "Student Updated Successfully: ", updatedStudent });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
   }
-});
+);
 
 module.exports = router;

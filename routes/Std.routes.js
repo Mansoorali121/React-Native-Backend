@@ -91,8 +91,8 @@ router.put(
     body("StudentName")
       .notEmpty()
       .withMessage("Student Name is Optional While updation")
-      .isLength({ min: 5, max: 12 })
-      .withMessage("Class should be between to 12 "),],
+      .isLength({ min: 5, max: 15 })
+      .withMessage("Class should be between to 15 "),],
  
   async (req, res) => {
     try {

@@ -7,7 +7,7 @@ const router = express.Router();
 const StudentsModel = require("../models/StdModel");
 
 // Adding Express Validator Library
-const { body, validationResult } = require("express-validator");
+const { body, validationResult, param } = require("express-validator");
 
 // Adding Data
 
@@ -87,15 +87,23 @@ router.delete("/:id", async (req, res) => {
 /// Update Students Data
 router.put(
   "/:id",
+
   [
+    param("id").isMongoId("").withMessage("Invalid Book Id"),
+
     body("StudentName")
       .notEmpty()
       .withMessage("Student Name is Optional While updation")
       .isLength({ min: 5, max: 15 })
-      .withMessage("Class should be between to 15 "),],
- 
+      .withMessage("Class should be between to 15 "),
+  ],
+
   async (req, res) => {
     try {
+        const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array() });
+      }
       const { id } = req.params;
       const updatedStudent = await StudentsModel.findByIdAndUpdate(
         id,

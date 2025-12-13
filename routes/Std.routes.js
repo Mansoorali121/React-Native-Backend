@@ -6,38 +6,22 @@ const router = express.Router();
 // Importing Student Model
 const StudentsModel = require("../models/StdModel");
 
-// Adding Express Validator Library
-const { body, validationResult, param } = require("express-validator");
+// import Student Validator
+const {
+  createStudentValidation,
+  StudentUpdatevalidation,
+  handlevalidationErrors,
+} = require("../vallidators/Studentvalidator");
 
 // Adding Data
 
 router.post(
   "/",
-  [
-    body("StudentName")
-      .notEmpty()
-      .withMessage("Student Name is Required")
-      // .isLength({ min: 5, max: 12 })
-      .withMessage("Class should be between to 12 "),
-    body("Age")
-      .notEmpty()
-      .withMessage("Student Age is required")
-      // .isInt({ min: 18, max: 30 })
-      .withMessage("Student Age must be between 18 and 30"),
 
-    body("Class")
-      .notEmpty()
-      .withMessage("Class can not be Empty ")
-      // .isLength({ min: 5, max: 12 })
-      .withMessage("Class should be between to 12 "),
-    body("Image").notEmpty().isURL().withMessage("Image Must be a valid URL"),
-  ],
+  createStudentValidation,
+  handlevalidationErrors,
   async (req, res) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ error: errors.array() });
-      }
       const newStudent = await StudentsModel.create(req.body);
       res.status(200).json(newStudent);
     } catch (error) {
@@ -88,22 +72,11 @@ router.delete("/:id", async (req, res) => {
 router.put(
   "/:id",
 
-  [
-    param("id").isMongoId("").withMessage("Invalid Book Id"),
-
-    body("StudentName")
-      .optional()
-      .withMessage("Student Name is Optional While updation")
-      .isLength({ min: 5, max: 15 })
-      .withMessage("Class should be between 5 to 12 "),
-  ],
+  StudentUpdatevalidation,
+  handlevalidationErrors,
 
   async (req, res) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ error: errors.array() });
-      }
       const { id } = req.params;
       const updatedStudent = await StudentsModel.findByIdAndUpdate(
         id,

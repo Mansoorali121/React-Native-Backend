@@ -92,15 +92,15 @@ router.put(
     param("id").isMongoId("").withMessage("Invalid Book Id"),
 
     body("StudentName")
-      .notEmpty()
+      .optional()
       .withMessage("Student Name is Optional While updation")
       .isLength({ min: 5, max: 15 })
-      .withMessage("Class should be between to 15 "),
+      .withMessage("Class should be between 5 to 12 "),
   ],
 
   async (req, res) => {
     try {
-        const errors = validationResult(req);
+      const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ error: errors.array() });
       }
